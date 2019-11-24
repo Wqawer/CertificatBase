@@ -1,3 +1,7 @@
+<?php
+    define("MAX_SIZE", 5*1024*1024);
+    $extensions= ["jpeg","jpg","png"];
+?>
 <body>
 <form method="post" enctype='multipart/form-data'>
     <input type="text" name="Name">
@@ -8,16 +12,20 @@
 </form>
 <?php
     if ($_SERVER['REQUEST_METHOD'] == 'POST' ) {
-        echo "got Post";
         $count = count($_FILES['file']['name']);
-        echo $count." Files";
-        if($count>0){
+        if($count==2){
             for($i=0;$i<$count;$i++){
-                //check MIME
-                //
+                if($_FILES['file']['size'][$i]<MAX_SIZE){
+                    
+                }
+                else{
+                    echo "<span style='color:red;'>Plik nr ".($i+1)." jest za duzy</span>";
+                }
             }
         }
-        
+        else{
+            echo "<span style='color:red;'>Musisz dodać 2 zdjęcia</span>";
+        }
     }
     ?>
 </body>
