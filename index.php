@@ -11,6 +11,7 @@
     </body>
 </html>
 <?php
+require("connInsert.php");
 function getGUID(){
     if (function_exists('com_create_guid')){
         return com_create_guid();
@@ -34,6 +35,8 @@ if(isset($_POST["Name"])&&$_POST["Name"]!=""&&isset($_POST["Surname"])&&$_POST["
     $tel = filter_var($_POST["tel"], FILTER_SANITIZE_STRING);
     //header('Content-Type: text/plain; charset=utf-8');
     $uploads= array(0=>"upfile",1=>"upfile2");
+    $awersName;
+    $rewersName;
     for($i=0;$i<2;$i++){
         try {
 
@@ -83,9 +86,16 @@ if(isset($_POST["Name"])&&$_POST["Name"]!=""&&isset($_POST["Surname"])&&$_POST["
             // You should name it uniquely.
             // DO NOT USE $_FILES[$uploads[$i]]['name'] WITHOUT ANY VALIDATION !!
             // On this example, obtain safe unique name from its binary data.
+            $guid = getGUID();
+            if($i==1){
+                $awersName = $guid.".$ext";
+            }
+            else{
+                $rewersName = $guid.".$ext";
+            }
             if (!move_uploaded_file(
                 $_FILES[$uploads[$i]]['tmp_name'],
-                sprintf('./uploads/'.getGUID().".$ext"
+                sprintf('./uploads/'.$guid.".$ext"
                 )
             )) {
                 throw new RuntimeException('Failed to move uploaded file.');
@@ -99,5 +109,8 @@ if(isset($_POST["Name"])&&$_POST["Name"]!=""&&isset($_POST["Surname"])&&$_POST["
 
         }
     }
+    $link = conn();
+    $q = "Insert into licenses  (Name,Surname, Phone, pathAwers, pathRewers) values ('$name', '$surname' ,'$tel' ,'$awersName', '$rewersName')";
+    $link->query($q);
 }
 ?>
