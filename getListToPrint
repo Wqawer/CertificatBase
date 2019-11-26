@@ -1,5 +1,0 @@
-<?php
-require_once("connGetDel.php");
-$link = conn();
-
-?>
