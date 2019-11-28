@@ -3,8 +3,6 @@ require_once("connGetDel.php");
 $link = conn();
 $count = 5;
 $p;
-//echo isset($_GET["p"]);
-echo is_int($_GET["p"]);
 if(isset($_GET["p"])&&is_numeric($_GET["p"])){
 $p = $_GET["p"];
 }
