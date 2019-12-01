@@ -1,6 +1,11 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors','on');
 require_once("connGetDel.php");
-$link = conn();
+require_once("fpdf181/fpdf.php");
+error_reporting(E_ALL);
+ini_set('display_errors','on');
+
 $count = 5;
 $p;
 if(isset($_GET["p"])&&is_numeric($_GET["p"])){
@@ -22,5 +27,5 @@ if ($result->num_rows > 0) {
 } else {
     echo "0 results";
 }
-echo "<button onclick='window.print()'>Drukuj</button><a href='getListToPrint.php?p=".($p+1)."'>następna strona</a>";
+echo "<a href='printPDF'>Drukuj</a><a href='getListToPrint.php?p=".($p+1)."'>następna strona</a>";
 ?>
